@@ -11,12 +11,12 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
     return list_dir(models_dir)
- 
+
 @app.route('/<path:path>', methods=['GET'])
 def serve(path):
     fetch_latest = '@latest' in path
     real_path = join(models_dir, path.replace('@latest', ''))
-    
+
     if not exists(real_path):
         return 'Not Found', 404
 
@@ -30,6 +30,15 @@ def serve(path):
             return list_dir(real_path)
     else:
         return download_file(real_path)
+
+
+# @app.route('/<path:path>', methods=['POST'])
+# def upload(path):
+#     fetch_latest = '@latest' in path
+#     real_path = join(models_dir, path.replace('@latest', ''))
+#
+#     if not exists(real_path):
+#         return 'Not Found', 404
 
 
 def list_dir(path):
