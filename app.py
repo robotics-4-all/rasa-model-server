@@ -32,13 +32,14 @@ def serve(path):
         return download_file(real_path)
 
 
-# @app.route('/<path:path>', methods=['POST'])
-# def upload(path):
-#     fetch_latest = '@latest' in path
-#     real_path = join(models_dir, path.replace('@latest', ''))
-#
-#     if not exists(real_path):
-#         return 'Not Found', 404
+@app.route('/<path:path>', methods=['POST'])
+def upload(path):
+    f = request.files['file']
+    # f.save(secure_filename(f.filename))
+    real_path = join(models_dir, path.replace('@latest', ''))
+
+    if not exists(real_path):
+        return 'Not Found', 404
 
 
 def list_dir(path):
